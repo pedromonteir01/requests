@@ -109,7 +109,7 @@ function listHTMLorders() {
 
     orderslist.forEach(order => {
         content += `
-            <div>
+            <div id="content">
                 <p>ID: ${order.id}</p>
                 <p>Client: ${order.client}</p>
                 <p>Table: ${order.table}</p>
