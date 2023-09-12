@@ -3,9 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="assets/script/script.index.js"></script>
+    <link rel="stylesheet" href="assets/styles/style.index.css" type="text/css">
+    <title>Orders</title>
 </head>
 <body>
-    
+    <main>
+        <article id="form-field">
+            <h2>Order Register</h2>
+            <section class="input-field">
+                <input type="text" id="client" name="client">
+            </section>
+            <section class="input-field">
+                <input type="text" id="table" name="table">
+            </section>
+            <section class="input-field">
+                <input type="text" id="description" name="description">
+            </section>
+            <section id="msgDiv">
+
+            </section>
+            <button type="button" onclick="catchValues()">Register</button>
+        </article>
+        <article>
+            <h2>Order list</h2>
+        </article>
+    </main>
 </body>
 </html>
