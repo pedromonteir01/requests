@@ -21,8 +21,39 @@ class OrdersList {
             sendMsg('error', 'Preencha todos os campos');
         } else {
             this.list.push(order);
+            listHTMLorders();
+            sendMsg('success', 'Você cadastrou o pedido!')
+            showQNT();
             cleanFields();
         }
+    }
+
+    listOrder() {
+        return this.list;
+    }
+
+    listOrders() {
+        return this.list.length <= 0 ? '' : this.list.length;
+    }
+
+    listOrderById(id) {
+        return this.list.find((order) => order.id == id);
+    }
+
+    updateOrder(id, client, table, description) {
+        const order = this.listOrderById(id);
+    
+        order.client = client;
+        order.table = table;
+        order.description = description;
+
+        return order;
+      }
+
+    deleteOrder(param) {
+        return (this.list = this.list.filter((order) => 
+            order.id != param
+        ));
     }
 }
 
@@ -62,5 +93,74 @@ function sendMsg(type, msg) {
     let msgP= `<p class="${type}">${msg}</p>`
 
     msgDiv.innerHTML = msgP;
+    document.getElementById('msgDiv').classList.remove('hidden');
+
+
+    setTimeout(function () {
+        document.getElementById('msgDiv').classList.add('hidden');
+    }, 3000)
 }
 
+function listHTMLorders() {
+    const orderslist = orders.listOrder();
+    const listElement = document.getElementById('orders')
+
+    let content = '';
+
+    orderslist.forEach(order => {
+        content += `
+            <div>
+                <p>ID: ${order.id}</p>
+                <p>Client: ${order.client}</p>
+                <p>Table: ${order.table}</p>
+                <p>Description: ${order.description}</p>
+                <button type="button" onclick="preEdit(${order.id})">Editar</button>
+                <button type="button" onclick="deleteOrder(${order.id})">Excluir</button>
+            </div>
+        `
+    });
+
+    listElement.innerHTML = content;
+}
+
+let aux = null;
+
+function preEdit(id) {
+    const order = orders.listOrderById(id);
+
+    document.getElementById('client').value = order.client;
+    document.getElementById('table').value = order.table;
+    document.getElementById('description').value = order.description;
+
+    aux = id;
+
+    document.getElementById('register').classList.add('hidden');
+    document.getElementById('edit').classList.remove('hidden');
+}
+
+function editOrder() {
+    let client = document.getElementById('client').value;
+    let table = document.getElementById('table').value;
+    let description = document.getElementById('description').value;
+
+    orders.updateOrder(aux, client, table, description);
+
+    listHTMLorders();
+    cleanFields();
+
+    document.getElementById('register').classList.remove('hidden');
+    document.getElementById('edit').classList.add('hidden');
+
+    aux = null;
+}
+
+function deleteOrder(id) {
+    orders.deleteOrder(id);
+    listHTMLorders();
+    showQNT();
+}
+
+function showQNT() {
+    let qnt = orders.listOrders();
+    document.getElementById('list').innerHTML = `Order list - ${qnt}`
+}

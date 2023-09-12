@@ -20,13 +20,17 @@
             <section class="input-field">
                 <input type="text" id="description" name="description">
             </section>
-            <section id="msgDiv">
+            <section id="msgDiv" class="hidden">
 
             </section>
-            <button type="button" onclick="catchValues()">Register</button>
-        </article>
+            <button id="register" class="" type="button" onclick="catchValues()">Register</button>
+            <button id="edit" class="hidden" type="button" onclick="editOrder()">Edit</button>
+        </article>  
         <article>
-            <h2>Order list</h2>
+            <h2 id="list">Order list</h2>
+            <section id="orders">
+
+            </section>
         </article>
     </main>
 </body>
